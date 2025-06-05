@@ -340,10 +340,8 @@
       <h1>🎉 Doğum Günün Kutlu Olsun Hayatım! 🎂</h1>
       <div class="emoji">🐰</div>
       <div class="emoji">🐿️</div>
-      <div class="emoji">🎁</div>
       <p>Tuna'dan Ezgi'ye özel doğum günü hediyesi!</p>
-      <div class="hearts">❤️ ❤️ ❤️</div>
-      
+      <button id="start-btn" onclick="startGame()">Oyunu Başlat</button>
       <div id="controls">
         <h2>Kontroller</h2>
         <p><strong>Tuna (Sincap):</strong> <span class="key">←</span> <span class="key">→</span> ile hareket et, <span class="key">SPACE</span> ile zıpla, <span class="key">Z</span> ile kar topu at</p>
@@ -351,7 +349,7 @@
         <p><strong>Oyun Kumandası:</strong> Sol analog çubuk ile hareket, A düğmesi ile zıpla, X düğmesi ile saldır</p>
       </div>
       
-      <button id="start-btn" onclick="startGame()">Oyunu Başlat</button>
+      
     </div>
   </div>
 
@@ -955,7 +953,7 @@
       
       if (gameActive && allDefeated && enemies.length > 0) {
         if (level < maxLevel) {
-          showMessage(`Tebrikler! Seviye ${level} tamamlandı 🎉`);
+          showMessage(`Askim Seviye ${level} tamamlandı 🎉`);
           gameActive = false;
           levelTransitionActive = true;
           
@@ -972,7 +970,7 @@
             gameActive = true;
           }, 2500); // Duration of flight animation
         } else {
-          showMessage("Hayatım iyi ki doğdun 30. yaşın kutlu olsun! <br>8 Haziran 2026'yı iple çekiyorum! ❤️");
+          showMessage("Hayatım iyi ki doğdun 30. yaşın kutlu olsun! <br>Seninle cok guzel anilarimiz oldu, her sey icin cok saol");
           gameActive = false; // Stop game
           setTimeout(() => {
             document.getElementById('intro').style.display = 'flex';

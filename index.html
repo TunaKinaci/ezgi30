@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Ezgi'ye Masal</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background: #fdf6ec;
+      text-align: center;
+      padding: 20px;
+    }
+    .scene {
+      display: none;
+      margin-top: 30px;
+    }
+    .active {
+      display: block;
+    }
+    img {
+      max-width: 80%;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    button {
+      padding: 12px 20px;
+      font-size: 18px;
+      margin: 10px;
+      background: #ff9aa2;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #f48b94;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🎉 Ezgi'ye Masal 🎉</h1>
+
+<div id="scene1" class="scene active">
+  <img src="sincap1.png" alt="Tırtık ormanda">
+  <p>Bugün Ezgi'nin doğum günüydü. Gökyüzü bulutsuzdu, kuşlar cıvıldıyor, çiçekler Ezgi için açıyordu.  
+  Tırtık, neşeli ve meraklı bir sincap olarak Ezgi'ye özel bir hediye bulmak istiyordu.  
+  “En değerli hediyeyi bulmalıyım,” dedi kendi kendine, minik pençeleriyle sırt çantasını sıvazlayarak.  
+  Gözlerini kararlı bir şekilde ormana çevirdi: “Macera zamanı!”</p>
+  <button data-target="scene2">Ormana gir</button>
+  <button data-target="fail1">Vazgeç, kestane ye 😅</button>
+</div>
+
+<div id="scene2" class="scene">
+  <img src="baykus.png" alt="Baykuşun ağacı">
+  <p>Tırtık ormanda ilerlerken bir ağacın dalında oturan Bilge Baykuş’u gördü.  
+  Baykuş gözlüğünü düzeltti, tüylerini kabarttı ve yavaşça konuştu:  
+  “Merhaba genç sincap... Bir armağan mı arıyorsun?”  
+  Tırtık başını salladı. “Ezgi için, onun gibi özel birine yakışır bir şey olmalı...”  
+  Baykuş başını salladı ve gagasıyla iki yolu işaret etti:  
+  “Gizemli Patika sana akıl sunar, Neşeli Çayır ise kalbini dinletir. Ama her yol kendi cevabını arar.</p>
+  <button data-target="scene3">Gizemli Patika</button>
+  <button data-target="scene4">Neşeli Çayır</button>
+</div>
+
+<div id="scene3" class="scene">
+  <img src="tavsan.png" alt="Tavşan soruyor">
+  <p>Tırtık patikadan ilerlediğinde karşısına sevimli bir tavşan çıktı.  
+  Tavşan zıplayarak selam verdi: “Hey orman yolcusu! Hediyeyi arıyorsan önce kalbinle düşünmelisin.”  
+  Tırtık kaşlarını kaldırdı: “Nasıl yani?”  
+  Tavşan göz kırptı: “Ezgi en çok neyle mutlu olur? Bu cevap seni doğru yola götürür. Yanlış cevapsa seni biraz yoldan saptırır.”  
+  Tırtık düşündü… “Ezgi neyi severdi acaba en çok?</p>
+  <button data-target="scene5">Kitaplar 📚</button>
+  <button data-target="fail2">Çikolata 🍫</button>
+</div>
+
+<div id="scene4" class="scene">
+  <img src="cayir.png" alt="Neşeli çayır">
+  <p>Tırtık çayıra girdiğinde rengârenk kelebekler etrafında dans etti.  
+  Güneş çiçeklerin üzerine usulca vuruyordu.  
+  “Ne kadar güzel burası...” dedi hayranlıkla.  
+  Ama etrafta hediye adına bir iz yoktu.  
+  Bir ses kalbinden geldi: “Güzellik bazen yeterli değildir, niyetinle yol almalısın.”  
+  Tırtık, çantasını sıkıca kavradı ve kararını verdi.</p>
+  <button data-target="scene2">Geri dön</button>
+</div>
+
+<div id="scene5" class="scene">
+  <img src="hediye.png" alt="Hediye anı">
+  <p>Tırtık doğru cevabı verdiğinde gökyüzünden bir ışık huzmesi indi.  
+  Tavşan, hafifçe başını eğdi: “Doğru cevap, çünkü Ezgi kelimelerle büyülenir. Her kitap onun için yeni bir dünya.”  
+  Patika bir anda açıldı ve yerde bir sandık belirdi.  
+  Tırtık heyecanla kapağını açtı. İçinde, Ezgi’nin en sevdiği yazarın imzalı bir kitabı ve minik bir kalp kolye vardı.  
+  “İşte bu!” dedi sevinçle.  
+  O an, orman neşeyle doldu. Kuşlar şarkı söyledi, ağaçlar fısıldadı: “Ezgi’ye sevgilerle...”  
+  Tırtık hediyeyi kalbine bastı ve yolculuğunu tamamladı.</p>
+  <button data-target="end">Masalı Bitir</button>
+</div>
+
+<div id="scene6" class="scene">
+  <img src="oyun.png" alt="Eglenceli Oyunlar">
+  <p>Hayatim istedigin oyunu secebilirsin, sevgilerle</p>
+  <button class="external-link" data-target="Dusmanla dort mevsim.html">Dusmanla Oyna</button>
+  <button class="external-link" data-target="Birbirimizle.html">Birbirimizle Oyna</button>
+  <button data-target="scene1">Basa Don</button>
+</div>
+
+<div id="fail1" class="scene">
+  <p>Tırtık tam gitmeye hazırlanırken yerde taze bir kestane gördü.  
+  Dayanamadı, hemen yedi… Karnı doyunca gölgenin altında kıvrıldı.  
+  “Ezgi’ye hediye… sonra…” dedi ve minik burnuyla horlamaya başladı. 🙃</p>
+  <button data-target="scene1">Başa Dön</button>
+</div>
+
+<div id="fail2" class="scene">
+  <p>Tırtık çikolatayı seçti. Tavşan başını iki yana salladı:  
+  “Çikolata herkesin hoşuna gider ama Ezgi'nin dünyasında hayal gücü daha tatlıdır.”  
+  Hafif bir rüzgâr esti, yol karardı.  
+  “Bir daha düşün,” dedi tavşan. “Ezgi’nin gözlerinde ne parıldar?”</p>
+  <button data-target="scene3">Tekrar Dene</button>
+</div>
+
+<div id="end" class="scene">
+  <img src="sonsoz.png" alt="İyi ki doğdun Ezgi">
+  <p>🎈 Masal sona erdi ama Tırtık ve Ezgi sonsuza dek dost kaldılar.  
+  Tırtık, her doğum gününde Ezgi için yeni masallar yaratmaya devam etti.  
+  Çünkü en güzel hediye, sevgiyle hazırlanandı.
+<br><br>  
+  <strong>İyi ki doğdun Ezgi!</strong></p>
+  <button data-target="scene1">Basa Don</button>
+  <button data-target="scene6">Buyuk Supriz</button>
+</div>
+
+<script>
+  document.querySelectorAll('#scene6 button.external-link').forEach(button => {
+    button.addEventListener('click', function (event) {
+      event.preventDefault();
+      event.stopImmediatePropagation(); // başka sahne geçişlerini engeller
+
+      const target = this.getAttribute('data-target');
+      if (target) {
+        window.open(target, '_blank');
+      }
+    });
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const buttons = document.querySelectorAll("button[data-target]");
+    buttons.forEach(button => {
+      button.addEventListener("click", () => {
+        const targetId = button.getAttribute("data-target");
+        document.querySelectorAll(".scene").forEach(scene => {
+          scene.classList.remove("active");
+        });
+        const targetScene = document.getElementById(targetId);
+        if (targetScene) targetScene.classList.add("active");
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

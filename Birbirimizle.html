@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ezgi'nin 30. Yaş Doğum Günü Kar Macerası ❄️</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      text-align: center;
+      color: white;
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #game-container {
+      position: relative;
+      width: 800px;
+      height: 600px;
+      margin: 0 auto;
+    }
+    canvas {
+      background: linear-gradient(to bottom, #87CEEB, #E0F7FF);
+      border: 6px solid #2c3e50;
+      border-radius: 12px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+    }
+    #intro {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 40, 0.9);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 20;
+      border-radius: 12px;
+    }
+    #intro h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #ff3366, 0 0 20px #ff3366;
+      color: #fff;
+    }
+    #intro p {
+      font-size: 1.8rem;
+      margin-bottom: 30px;
+      max-width: 80%;
+      line-height: 1.6;
+    }
+    #intro .hearts {
+      font-size: 2.5rem;
+      margin: 20px 0;
+      color: #ff3366;
+      animation: pulse 1.5s infinite;
+    }
+    #start-btn {
+      background: linear-gradient(to right, #ff3366, #ff4b2b);
+      color: white;
+      border: none;
+      padding: 15px 50px;
+      font-size: 1.8rem;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Comic Sans MS', cursive;
+      font-weight: bold;
+      box-shadow: 0 5px 15px rgba(255, 51, 102, 0.4);
+      margin-top: 20px;
+    }
+    #start-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 20px rgba(255, 51, 102, 0.6);
+    }
+    #controls {
+      background: rgba(0, 0, 40, 0.7);
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
+      width: 80%;
+    }
+    #controls h2 {
+      margin-bottom: 10px;
+      color: #4dc0ff;
+    }
+    #controls p {
+      font-size: 1.1rem;
+      margin: 5px 0;
+    }
+    #controls .key {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 3px 8px;
+      border-radius: 5px;
+      margin: 0 3px;
+      font-family: monospace;
+    }
+    #player-info {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 40, 0.7);
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #fff;
+      z-index: 10;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    #message {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 40, 0.9);
+      padding: 20px 40px;
+      border-radius: 10px;
+      font-size: 2rem;
+      font-weight: bold;
+      color: #ffcc00;
+      z-index: 15;
+      display: none;
+      box-shadow: 0 0 30px rgba(255, 204, 0, 0.5);
+      text-align: center;
+      max-width: 90%;
+    }
+    #tutorial {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 40, 0.7);
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 1.2rem;
+      color: #fff;
+      z-index: 10;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+    .emoji {
+      font-size: 3rem;
+      margin: 0 5px;
+      display: inline-block;
+      animation: float 3s infinite;
+    }
+    .emoji:nth-child(2) { animation-delay: 0.5s; }
+    .emoji:nth-child(3) { animation-delay: 1s; }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <div id="player-info">Tuna Puan: <span id="tuna-score-display">0</span> | Ezgi Puan: <span id="ezgi-score-display">0</span> ❤️</div>
+    <div id="message"></div>
+    <div id="tutorial">Kar topu atmak için: Tuna (Z) | Ezgi (X)</div>
+    
+    <div id="intro">
+      <h1>🎉 Doğum Günün Kutlu Olsun Hayatım 🎂</h1>
+      <div class="emoji">🐰</div>
+      <div class="emoji">🐿️</div>
+      <div class="emoji">🎁</div>
+      <p>Seni çok ama çok seviyorum!</p>
+      <div class="hearts">❤️ ❤️ ❤️</div>
+      
+      <div id="controls">
+        <h2>Kontroller</h2>
+        <p><strong>Tuna (Sincap):</strong> <span class="key">←</span> <span class="key">→</span> ile hareket et, <span class="key">SPACE</span> ile zıpla, <span class="key">Z</span> ile kar topu at</p>
+        <p><strong>Ezgi (Tavşan):</strong> <span class="key">A</span> <span class="key">D</span> ile hareket et, <span class="key">W</span> ile zıpla, <span class="key">X</span> ile kar topu at</p>
+      </div>
+      
+      <button id="start-btn" onclick="startGame()">Oyunu Başlat</button>
+    </div>
+  </div>
+
+  <script>
+    // Canvas ve bağlamı
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const messageDisplay = document.getElementById('message');
+    const tutorialDisplay = document.getElementById('tutorial');
+    const ezgiScoreDisplay = document.getElementById('tuna-score-display');
+    const tunaScoreDisplay = document.getElementById('ezgi-score-display');
+    
+    // Oyun değişkenleri
+    let gravity = 0.5;
+    let keys = {};
+    let platforms = [];
+    let snowballs = [];
+    let gameActive = false;
+    
+    // Karakterler
+    const tuna = {
+      x: 100,
+      y: 400,
+      width: 40,
+      height: 50,
+      vx: 0,
+      vy: 0,
+      jumpPower: -12,
+      onGround: false,
+      color: '#3366FF',
+      name: 'Tuna',
+      direction: 1, // 1: sağa, -1: sola
+      emoji: '🐿️',
+      score: 0
+    };
+    
+    const ezgi = {
+      x: 200,
+      y: 400,
+      width: 40,
+      height: 50,
+      vx: 0,
+      vy: 0,
+      jumpPower: -12,
+      onGround: false,
+      color: '#FF66CC',
+      name: 'Ezgi',
+      direction: 1,
+      emoji: '🐰',
+      score: 0
+    };
+    
+    // Kar taneleri
+    const snowflakes = [];
+    for (let i = 0; i < 150; i++) {
+      snowflakes.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 4 + 1,
+        speed: Math.random() * 3 + 1,
+        sway: Math.random() * 2 - 1
+      });
+    }
+    
+    // Oyun başlatma
+    function startGame() {
+      document.getElementById('intro').style.display = 'none';
+      gameActive = true;
+      ezgi.score = 0;
+      tuna.score = 0;
+      updateScoreDisplay();
+      initGameElements();
+      gameLoop();
+      
+      // Klavye olayları
+      document.addEventListener('keydown', e => keys[e.code] = true);
+      document.addEventListener('keyup', e => keys[e.code] = false);
+      
+      // Tutorial'ı göster/gizle
+      tutorialDisplay.style.opacity = '1';
+      setTimeout(() => {
+        tutorialDisplay.style.opacity = '0.5';
+      }, 5000);
+    }
+    
+    // Oyun elementlerini başlat
+    function initGameElements() {
+      // Karakter pozisyonlarını sıfırla
+      tuna.x = 100;
+      tuna.y = 400;
+      tuna.vx = 0;
+      tuna.vy = 0;
+      tuna.onGround = false;
+      ezgi.x = 200;
+      ezgi.y = 400;
+      ezgi.vx = 0;
+      ezgi.vy = 0;
+      ezgi.onGround = false;
+      
+      // Platformları oluştur
+      platforms = [];
+      platforms.push({x: 0, y: canvas.height - 40, width: canvas.width, height: 40});
+      
+      for (let i = 0; i < 8; i++) { // Sabit sayıda platform
+        const width = 80 + Math.random() * 100;
+        const yPos = canvas.height - 100 - i * 70;
+        if (yPos < 100) break;
+        platforms.push({
+          x: Math.random() * (canvas.width - width),
+          y: yPos,
+          width: width,
+          height: 20
+        });
+      }
+      
+      // Kar toplarını temizle
+      snowballs = [];
+    }
+    
+    // Karakter güncelleme
+    function updateCharacter(ch, leftKey, rightKey, jumpKey, shootKey) {
+      // Yön tespiti
+      if (keys[leftKey]) {
+        ch.direction = -1;
+        ch.vx = -5;
+      }
+      if (keys[rightKey]) {
+        ch.direction = 1;
+        ch.vx = 5;
+      }
+      if (!keys[leftKey] && !keys[rightKey]) {
+        ch.vx = 0;
+      }
+      
+      // Zıplama
+      if (keys[jumpKey] && ch.onGround) {
+        ch.vy = ch.jumpPower;
+        ch.onGround = false;
+      }
+      
+      // Yerçekimi
+      ch.vy += gravity;
+      ch.y += ch.vy;
+      ch.x += ch.vx;
+      
+      // Sınır kontrolü
+      if (ch.x < 0) ch.x = 0;
+      if (ch.x + ch.width > canvas.width) ch.x = canvas.width - ch.width;
+      
+      // Platform çarpışma kontrolü
+      ch.onGround = false;
+      for (const plat of platforms) {
+        if (ch.x + ch.width > plat.x && 
+            ch.x < plat.x + plat.width &&
+            ch.y + ch.height > plat.y &&
+            ch.y + ch.height < plat.y + plat.height &&
+            ch.vy > 0) {
+          ch.y = plat.y - ch.height;
+          ch.vy = 0;
+          ch.onGround = true;
+        }
+      }
+      
+      // Kar topu atma
+      if (keys[shootKey]) {
+        if (!ch.lastShot || Date.now() - ch.lastShot > 500) {
+          snowballs.push({
+            x: ch.x + ch.width/2,
+            y: ch.y + ch.height/2,
+            vx: ch.direction * 8,
+            vy: -2,
+            radius: 10,
+            color: '#FFFFFF',
+            shooter: ch.name // Kimin attığını belirt
+          });
+          ch.lastShot = Date.now();
+        }
+      }
+    }
+    
+    // Kar toplarını güncelleme
+    function updateSnowballs() {
+      for (let i = snowballs.length - 1; i >= 0; i--) {
+        const sb = snowballs[i];
+        
+        sb.x += sb.vx;
+        sb.y += sb.vy;
+        if (sb.vy < 5) sb.vy += 0.2;
+        
+        if (sb.x < 0 || sb.x > canvas.width || sb.y > canvas.height) {
+          snowballs.splice(i, 1);
+          continue;
+        }
+        
+        for (const plat of platforms) {
+          if (sb.x + sb.radius > plat.x && 
+              sb.x - sb.radius < plat.x + plat.width &&
+              sb.y + sb.radius > plat.y &&
+              sb.y - sb.radius < plat.y + plat.height) {
+            snowballs.splice(i, 1);
+            continue;
+          }
+        }
+
+        // Ezgi'ye çarpma kontrolü (Tuna'nın attığı kar topu)
+        if (sb.shooter === 'Tuna') {
+            const dx = sb.x - (ezgi.x + ezgi.width / 2);
+            const dy = sb.y - (ezgi.y + ezgi.height / 2);
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < sb.radius + ezgi.width / 2) {
+                ezgi.score++;
+                updateScoreDisplay();
+                snowballs.splice(i, 1);
+                // İsteğe bağlı: Ezgi'ye isabet efekti eklenebilir
+                break;
+            }
+        } else if (sb.shooter === 'Ezgi') { // Ezgi'nin attığı kar topu Tuna'ya çarpma kontrolü
+            const dx = sb.x - (tuna.x + tuna.width / 2);
+            const dy = sb.y - (tuna.y + tuna.height / 2);
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < sb.radius + tuna.width / 2) {
+                tuna.score++;
+                updateScoreDisplay();
+                snowballs.splice(i, 1);
+                break;
+            }
+        }
+      }
+    }
+    
+    // Oyun sonu kontrolü
+    function checkGameEndCondition() {
+      let winner = null;
+      if (ezgi.score >= 30) {
+        winner = 'Ezgi';
+      } else if (tuna.score >= 30) {
+        winner = 'Tuna';
+      }
+
+      if (winner) {
+        showMessage(`🎉 Hayatım, 30. Yaşın Kutlu Olsun! 🎉\n❤️ Sevgilerle ❤️`);
+        gameActive = false;
+        setTimeout(() => {
+          document.getElementById('intro').style.display = 'flex';
+        }, 4000); // Mesajın görünmesi için biraz bekle
+      }
+    }
+    
+    // Mesaj göster
+    function showMessage(text) {
+      messageDisplay.innerHTML = text.replace(/\n/g, '<br>'); // \n karakterlerini <br> ile değiştir
+      messageDisplay.style.display = 'block';
+      setTimeout(() => {
+        messageDisplay.style.display = 'none';
+      }, 3500); // Mesaj süresini biraz uzat
+    }
+
+    function updateScoreDisplay() {
+        ezgiScoreDisplay.textContent = ezgi.score;
+        tunaScoreDisplay.textContent = tuna.score;
+    }
+    
+    // Oyun güncelleme
+    function update() {
+      if (!gameActive) return;
+      
+      updateCharacter(tuna, 'ArrowLeft', 'ArrowRight', 'Space', 'KeyZ');
+      updateCharacter(ezgi, 'KeyA', 'KeyD', 'KeyW', 'KeyX');
+      updateSnowballs();
+      checkGameEndCondition();
+      
+      for (const flake of snowflakes) {
+        flake.y += flake.speed;
+        flake.x += flake.sway * 0.3;
+        if (flake.y > canvas.height) {
+          flake.y = 0;
+          flake.x = Math.random() * canvas.width;
+        }
+        if (flake.x < 0 || flake.x > canvas.width) {
+          flake.sway *= -1;
+        }
+      }
+    }
+    
+    // Çizim fonksiyonları
+    function draw() {
+      ctx.fillStyle = '#1a2a6c';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+      for (const flake of snowflakes) {
+        ctx.beginPath();
+        ctx.arc(flake.x, flake.y, flake.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      
+      ctx.fillStyle = '#8B4513';
+      for (const plat of platforms) {
+        ctx.fillRect(plat.x, plat.y, plat.width, plat.height);
+        ctx.fillStyle = '#5D2906';
+        ctx.fillRect(plat.x, plat.y, plat.width, 5);
+        ctx.fillStyle = '#8B4513';
+      }
+      
+      drawCharacter(tuna);
+      drawCharacter(ezgi);
+      
+      for (const sb of snowballs) {
+        ctx.fillStyle = sb.color;
+        ctx.beginPath();
+        ctx.arc(sb.x, sb.y, sb.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#AACCFF';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+    }
+    
+    // Karakter çizimi
+    function drawCharacter(ch) {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+      ctx.beginPath();
+      ctx.ellipse(ch.x + ch.width/2, ch.y + ch.height + 5, ch.width/3, 8, 0, 0, Math.PI * 2);
+      ctx.fill();
+      
+      ctx.font = '40px Arial';
+      ctx.fillText(ch.emoji, ch.x - 5, ch.y + ch.height - 5);
+      
+      ctx.font = 'bold 14px Arial';
+      ctx.fillStyle = ch.color;
+      ctx.textAlign = 'center';
+      ctx.fillText(ch.name, ch.x + ch.width/2, ch.y - 10);
+      ctx.textAlign = 'left';
+    }
+    
+    // Oyun döngüsü
+    function gameLoop() {
+      if (gameActive) {
+        update();
+        draw();
+      }
+      requestAnimationFrame(gameLoop);
+    }
+  </script>
+</body>
+</html>

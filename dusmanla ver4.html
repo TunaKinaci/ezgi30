@@ -420,6 +420,68 @@
     let backgroundMusic = null;
     let musicStarted = false;
     
+
+// Arka plan müziği için global değişken
+let backgroundMelodyInterval = null;
+
+
+
+// Melodi ve akorları birlikte tutan dizi
+const chiptuneMelodyWithChords = [
+  { freqs: [440, 659], duration: 0.25 }, // A + E
+  { freqs: [494, 659], duration: 0.25 }, // B + E
+  { freqs: [523, 659], duration: 0.25 }, // C + E
+  { freqs: [587, 784], duration: 0.25 }, // D + G
+  { freqs: [659, 880], duration: 0.25 }, // E + A
+  { freqs: [587, 784], duration: 0.25 }, // D + G
+  { freqs: [523, 784], duration: 0.25 }, // C + G
+  { freqs: [440, 659], duration: 0.25 }, // A + E
+
+  { freqs: [392, 587], duration: 0.25 }, // G + D
+  { freqs: [440, 659], duration: 0.25 }, // A + E
+  { freqs: [494, 659], duration: 0.25 }, // B + E
+  { freqs: [523, 659], duration: 0.25 }, // C + E
+  { freqs: [494, 659], duration: 0.25 }, // B + E
+  { freqs: [440, 659], duration: 0.25 }, // A + E
+  { freqs: [392, 587], duration: 0.25 }, // G + D
+  { freqs: [349, 523], duration: 0.25 }, // F + C
+
+  { freqs: [330, 523], duration: 0.25 }, // E + C
+  { freqs: [349, 523], duration: 0.25 }, // F + C
+  { freqs: [392, 587], duration: 0.25 }, // G + D
+  { freqs: [440, 659], duration: 0.25 }, // A + E
+  { freqs: [392, 587], duration: 0.25 }, // G + D
+  { freqs: [349, 523], duration: 0.25 }, // F + C
+  { freqs: [330, 494], duration: 0.25 }, // E + B
+  { freqs: [294, 440], duration: 0.25 }, // D + A
+
+  { freqs: [262, 392], duration: 0.5 },  // C + G
+  { freqs: [0], duration: 0.25 },        // pause
+];
+
+// Akorlarla birlikte çal
+function playbaslangicmusic() {
+  let noteIndex = 0;
+  backgroundMelodyInterval = setInterval(() => {
+    if (!soundEnabled) return;
+
+    const note = chiptuneMelodyWithChords[noteIndex];
+    for (let freq of note.freqs) {
+      if (freq > 0) createSound(freq, note.duration, 'square');
+    }
+
+    noteIndex = (noteIndex + 1) % chiptuneMelodyWithChords.length;
+  }, 250);
+}
+
+function stopplaybaslangicmusic() {
+  if (backgroundMelodyInterval) {
+    clearInterval(backgroundMelodyInterval);
+    backgroundMelodyInterval = null;
+  }
+}
+
+
     // Oyun müziği - Daha iyi 8-bit melodisi
     function playBackgroundMusic() {
       if (!soundEnabled || musicStarted) return;
@@ -653,8 +715,8 @@
       level = 1;
       initLevel();
       gameLoop();
+      playbaslangicmusic();
       
-      playBackgroundMusic();
       
       // Klavye olayları
       document.addEventListener('keydown', e => {
@@ -716,9 +778,11 @@
       ezgi.vy = 0;
       ezgi.onGround = false;
       ezgi.invincible = true;
-
+	
       setTimeout(() => {
         if(gameActive) {
+	stopplaybaslangicmusic()
+	playBackgroundMusic();
           tuna.invincible = false;
           ezgi.invincible = false;
         }
